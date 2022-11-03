@@ -154,7 +154,7 @@
                     },
                     {
                         "id": "Authorization",
-                        "name": "Authorization (temporary fix, UNSAFE. Do not put secret keys in here!)",
+                        "name": "Authorization",
                         "description": "Auth string",
                         "validation": {
                             "dataType": "String",
