@@ -4,8 +4,8 @@
     "publisher": "Apodemus",
     "version": "1.0.70",
     "public": true,
-    "name": "REST Request Button",
-    "description": "Azure DevOps Extension",
+    "name": "Work Item REST Request Button",
+    "description": "Adds a custom control with a button that sends a REST request.",
     "categories": [
         "Azure Boards"
     ],

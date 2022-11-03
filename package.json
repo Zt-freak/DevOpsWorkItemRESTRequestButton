@@ -1,7 +1,7 @@
 {
-  "name": "rest-request-button",
+  "name": "devops-workitem-rest-request-button",
   "version": "1.0.0",
-  "description": "REST Request Button",
+  "description": "Work Item REST Request Button",
   "keywords": [
     "extensions",
     "Azure DevOps",
