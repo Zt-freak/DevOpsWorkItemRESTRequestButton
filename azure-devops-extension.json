@@ -1,0 +1,38 @@
+{
+    "manifestVersion": 1.0,
+    "id": "RESTRequestButton",
+    "publisher": "Apodemus",
+    "version": "1.0.70",
+    "public": true,
+    "name": "REST Request Button",
+    "description": "Azure DevOps Extension",
+    "categories": [
+        "Azure Boards"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "icons": {
+        "default": "logo.png"
+    },
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+    "scopes": [
+        "vso.work"
+    ],
+    "files": [
+        {
+            "path": "static",
+            "addressable": true
+        },
+        {
+            "path": "dist",
+            "addressable": true
+        }
+    ]
+}
