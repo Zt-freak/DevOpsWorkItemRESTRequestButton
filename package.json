@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Zt-freak/DevOpsWorkItemRESTRequestButton"
   },
   "scripts": {
     "clean": "rimraf ./dist",

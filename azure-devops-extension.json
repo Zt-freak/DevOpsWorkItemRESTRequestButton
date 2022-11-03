@@ -34,5 +34,28 @@
             "path": "dist",
             "addressable": true
         }
+    ],
+    "links": {
+        "home": {
+            "uri": "https://github.com/Zt-freak/DevOpsWorkItemRESTRequestButton"
+        },
+        "learn": {
+            "uri": "https://github.com/Zt-freak/DevOpsWorkItemRESTRequestButton"
+        },
+        "repository": {
+            "uri": "https://github.com/Zt-freak/DevOpsWorkItemRESTRequestButton"
+        },
+        "issues": {
+            "uri": "https://github.com/Zt-freak/DevOpsWorkItemRESTRequestButton/issues"
+        },
+        "support": {
+            "uri": "https://github.com/Zt-freak/DevOpsWorkItemRESTRequestButton/issues"
+        }
+    },
+    "tags": [
+        "Work Items",
+        "Extensions",
+        "Work Item Control",
+        "REST"
     ]
 }

@@ -87,7 +87,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 })
 
                             this.setState({
-                                message: response.statusText
+                                message: `${response.status} - ${response.statusText}`
                             })
                         },
                         (error: Error) => this.setState({
