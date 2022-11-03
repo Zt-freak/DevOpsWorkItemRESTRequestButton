@@ -15,7 +15,8 @@
         }
     ],
     "icons": {
-        "default": "logo.png"
+        "default": "restbutton-128.png",
+        "large": "restbutton-512.png"
     },
     "content": {
         "details": {
