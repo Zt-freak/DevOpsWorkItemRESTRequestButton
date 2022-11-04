@@ -1,6 +1,6 @@
 # Work Item REST Request Button
 
-![image](restbutton-512.png)
+![image](restbutton-128.png)
 
 This extension adds a custom control for work items with a button that sends a REST request.
 
