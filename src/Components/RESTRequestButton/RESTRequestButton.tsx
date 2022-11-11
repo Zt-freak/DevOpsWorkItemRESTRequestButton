@@ -64,6 +64,14 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         const fieldValues : Promise<{[fieldName: string]: Object}> = workItemFormService.getFieldValues(fields, options)
         fieldValues
             .then( data => {
+                if (SDK.getConfiguration().witInputs["SendUser"]) {
+                    data["User.Id"] = SDK.getUser().id
+                    data["User.Name"] = SDK.getUser().name
+                    data["User.DislayName"] = SDK.getUser().displayName
+                    data["User.Descriptor"] = SDK.getUser().descriptor
+                    data["User.ImageURL"] = SDK.getUser().imageUrl
+                }
+
                 fetch(this.buildUri(endpoint, data), this.buildConfiguration(data))
                     .then(
                         (response) => {
@@ -104,34 +112,34 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
 
         const method: string = SDK.getConfiguration().witInputs["Method"]
         if (method != null && method != undefined)
-            requestConfig.method = SDK.getConfiguration().witInputs["Method"]
+            requestConfig.method = method
 
         const mode: string = SDK.getConfiguration().witInputs["Mode"]
         if (mode != null && mode != undefined)
-            requestConfig.mode = SDK.getConfiguration().witInputs["Mode"]
+            requestConfig.mode = mode as RequestMode
 
         const cache: string = SDK.getConfiguration().witInputs["Cache"]
         if (cache != null && cache != undefined)
-            requestConfig.cache = SDK.getConfiguration().witInputs["Cache"]
+            requestConfig.cache = cache as RequestCache
 
         const credentials: string = SDK.getConfiguration().witInputs["Credentials"]
         if (credentials != null && credentials != undefined)
-            requestConfig.credentials = SDK.getConfiguration().witInputs["Credentials"]
+            requestConfig.credentials = credentials as RequestCredentials
         
         const redirect: string = SDK.getConfiguration().witInputs["Redirect"]
         if (redirect != null && redirect != undefined)
-            requestConfig.redirect = SDK.getConfiguration().witInputs["Redirect"]
+            requestConfig.redirect = redirect as RequestRedirect
 
         const referrerPolicy: string = SDK.getConfiguration().witInputs["ReferrerPolicy"]
         if (referrerPolicy != null && referrerPolicy != undefined)
-            requestConfig.referrerPolicy = SDK.getConfiguration().witInputs["ReferrerPolicy"]
+            requestConfig.referrerPolicy = referrerPolicy as ReferrerPolicy
 
         requestConfig.headers = new Headers();
         requestConfig.headers.append("Content-Type", "application/json")
 
         const authorization: string = SDK.getConfiguration().witInputs["Authorization"]
         if (authorization != null && authorization != undefined)
-            requestConfig.headers.append("Authorization", SDK.getConfiguration().witInputs["Authorization"])
+            requestConfig.headers.append("Authorization", authorization)
 
         if (
             requestConfig.method == "PUT" ||
