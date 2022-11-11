@@ -39,8 +39,8 @@
                     },
                     {
                         "id": "SendUser",
-                        "name": "Do you want to send the user ID along with the data?",
-                        "description": "Do you want to send the user ID along with the data?",
+                        "name": "Do you want to send the user ID along with the data? (boolean)",
+                        "description": "true, false",
                         "properties": {
                             "workItemFieldTypes": ["Boolean"]
                         },

@@ -67,7 +67,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                 if (SDK.getConfiguration().witInputs["SendUser"]) {
                     data["User.Id"] = SDK.getUser().id
                     data["User.Name"] = SDK.getUser().name
-                    data["User.DislayName"] = SDK.getUser().displayName
+                    data["User.DisplayName"] = SDK.getUser().displayName
                     data["User.Descriptor"] = SDK.getUser().descriptor
                     data["User.ImageURL"] = SDK.getUser().imageUrl
                 }
