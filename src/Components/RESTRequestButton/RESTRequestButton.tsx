@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as SDK from "azure-devops-extension-sdk"
-import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions } from "azure-devops-extension-api/WorkItemTracking"
+import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions, IWorkItemLoadedArgs, IWorkItemFieldChangedArgs } from "azure-devops-extension-api/WorkItemTracking"
 
 import "./RestRequestButton.scss"
 
@@ -21,12 +21,23 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
     }
 
     public componentDidMount() {
-        SDK.init({})
-            .then( () => {
+        SDK.init()
+        .then( () => {
+            SDK.register(SDK.getContributionId(), () => {
+                return {
+                    
+                }
+            })
+        })
+
+        SDK.ready().then(
+            () => {
+                SDK.notifyLoadSucceeded()
                 this.setState({
                     buttonText: SDK.getConfiguration().witInputs["ButtonTitle"]
                 })
-            })
+            }
+        )
     }
 
     public render(): JSX.Element {
@@ -63,7 +74,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
 
         const fieldValues : Promise<{[fieldName: string]: Object}> = workItemFormService.getFieldValues(fields, options)
         fieldValues
-            .then( data => {
+            .then( async data => {
                 if (SDK.getConfiguration().witInputs["SendUser"] != "false" && SDK.getConfiguration().witInputs["SendUser"] != false) {
                     data["User.Id"] = SDK.getUser().id
                     data["User.Name"] = SDK.getUser().name
@@ -72,7 +83,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                     data["User.ImageURL"] = SDK.getUser().imageUrl
                 }
 
-                fetch(this.buildUri(endpoint, data), this.buildConfiguration(data))
+                fetch(this.buildUri(endpoint, data), await this.buildConfiguration(data))
                     .then(
                         (response) => {
                             if (response.status >= 200 && response.status < 300)
@@ -107,7 +118,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
             })
     }
 
-    private buildConfiguration(body: object) : RequestInit {
+    private async buildConfiguration(body: object) : Promise<RequestInit> {
         let requestConfig: RequestInit =  new RequestConfig();
 
         const method: string = SDK.getConfiguration().witInputs["Method"]
@@ -140,6 +151,8 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         const authorization: string = SDK.getConfiguration().witInputs["Authorization"]
         if (authorization != null && authorization != undefined)
             requestConfig.headers.append("Authorization", authorization)
+        else
+            requestConfig.headers.append("Authorization", `Bearer ${await SDK.getAppToken()}`)
 
         if (
             requestConfig.method == "PUT" ||
