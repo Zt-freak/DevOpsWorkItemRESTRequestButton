@@ -64,7 +64,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         const fieldValues : Promise<{[fieldName: string]: Object}> = workItemFormService.getFieldValues(fields, options)
         fieldValues
             .then( data => {
-                if (SDK.getConfiguration().witInputs["SendUser"]) {
+                if (SDK.getConfiguration().witInputs["SendUser"] != "false" && SDK.getConfiguration().witInputs["SendUser"] != false) {
                     data["User.Id"] = SDK.getUser().id
                     data["User.Name"] = SDK.getUser().name
                     data["User.DisplayName"] = SDK.getUser().displayName
