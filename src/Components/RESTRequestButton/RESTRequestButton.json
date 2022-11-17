@@ -38,6 +38,15 @@
                         }
                     },
                     {
+                        "id": "CustomSender",
+                        "name": "Custom sender id (default: \"WorkItemRESTRequestButton\")",
+                        "description": "Custom sender id (default: \"WorkItemRESTRequestButton\")",
+                        "validation": {
+                            "dataType": "String",
+                            "isRequired": true
+                        }
+                    },
+                    {
                         "id": "SendUser",
                         "name": "Do you want to send the user ID along with the data? (boolean)",
                         "description": "true, false",

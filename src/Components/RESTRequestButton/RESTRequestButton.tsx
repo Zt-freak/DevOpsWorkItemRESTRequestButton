@@ -75,6 +75,16 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         const fieldValues : Promise<{[fieldName: string]: Object}> = workItemFormService.getFieldValues(fields, options)
         fieldValues
             .then( async data => {
+
+                // set Sender
+
+                if (SDK.getConfiguration().witInputs["CustomSender"] != null && SDK.getConfiguration().witInputs["CustomSender"] != undefined && SDK.getConfiguration().witInputs["CustomSender"] != "")
+                    data["Sender"] = SDK.getConfiguration().witInputs["CustomSender"]
+                else
+                    data["Sender"] = "WorkItemRESTRequestButton"
+
+                // set user data
+
                 if (SDK.getConfiguration().witInputs["SendUser"] != "false" && SDK.getConfiguration().witInputs["SendUser"] != false) {
                     data["User.Id"] = SDK.getUser().id
                     data["User.Name"] = SDK.getUser().name
@@ -82,6 +92,8 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                     data["User.Descriptor"] = SDK.getUser().descriptor
                     data["User.ImageURL"] = SDK.getUser().imageUrl
                 }
+
+                // send request
 
                 fetch(this.buildUri(endpoint, data), await this.buildConfiguration(data))
                     .then(
