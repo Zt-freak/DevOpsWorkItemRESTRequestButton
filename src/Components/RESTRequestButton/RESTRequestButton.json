@@ -43,7 +43,7 @@
                         "description": "Custom sender id (default: \"WorkItemRESTRequestButton\")",
                         "validation": {
                             "dataType": "String",
-                            "isRequired": true
+                            "isRequired": false
                         }
                     },
                     {
