@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1.0,
     "id": "RESTRequestButton",
-    "publisher": "Bluace",
+    "publisher": "Apodemus",
     "version": "1.0.85",
     "public": true,
     "name": "Work Item REST Request Button",
