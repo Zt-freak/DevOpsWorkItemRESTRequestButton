@@ -1,5 +1,20 @@
 @import "node_modules/azure-devops-ui/Core/_platformCommon.scss";
 
+.button {
+    width: fit-content;
+}
 .bolt-tooltip {
     pointer-events: none;
+}
+
+.resultbox {
+    width: 100%;
+    font-family: $fontFamilyMonospace
+}
+
+.buttonContainer {
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
 }

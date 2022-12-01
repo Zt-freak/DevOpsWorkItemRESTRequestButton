@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import * as SDK from "azure-devops-extension-sdk"
-import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions, IWorkItemLoadedArgs, IWorkItemFieldChangedArgs } from "azure-devops-extension-api/WorkItemTracking"
+import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions } from "azure-devops-extension-api/WorkItemTracking"
 
 import "./RestRequestButton.scss"
 
+import { Card } from "azure-devops-ui/Card"
 import { Button } from "azure-devops-ui/Button"
 
 import { showRootComponent } from "../../Common"
 
-class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: string, statusColor: string, message: string | undefined }> {
+class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: string, statusColor: string, message: string | undefined, responseBody: string | undefined}> {
 
     constructor(props: {}) {
         super(props)
@@ -16,7 +17,8 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
             buttonText: "default text",
             buttonIcon: "CircleRing",
             statusColor: "",
-            message: "Click the button to send a HTTP request"
+            message: "Click the button to send a HTTP request",
+            responseBody: "Response body appears here"
         }
     }
 
@@ -36,24 +38,31 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                 this.setState({
                     buttonText: SDK.getConfiguration().witInputs["ButtonTitle"]
                 })
+                SDK.resize()
             }
         )
     }
 
     public render(): JSX.Element {
         return (
-            <Button
-                text={this.state.buttonText}
-                tooltipProps={{
-                    text: this.state.message,
-                    delayMs: 500
-                }}
-                iconProps={{
-                    iconName: this.state.buttonIcon,
-                    style: {color: this.state.statusColor}
-                }}
-                onClick={() => this.clickEvent()}
-            />
+            <div className='buttonContainer'>
+                <Button
+                    text={this.state.buttonText}
+                    tooltipProps={{
+                        text: this.state.message,
+                        delayMs: 500
+                    }}
+                    iconProps={{
+                        iconName: this.state.buttonIcon,
+                        style: {color: this.state.statusColor}
+                    }}
+                    onClick={() => this.clickEvent()}
+                    className="button"
+                />
+                <Card className="flex-grow resultbox">
+                    {this.state.responseBody}
+                </Card>
+            </div>
         )
     }
 
@@ -97,11 +106,11 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
 
                 fetch(this.buildUri(endpoint, data), await this.buildConfiguration(data))
                     .then(
-                        (response) => {
+                        async (response) => {
                             if (response.status >= 200 && response.status < 300)
                                 this.setState({
                                     buttonIcon: "SkypeCircleCheck",
-                                    statusColor: "#55a362",
+                                    statusColor: "#55a362"
                                 })
                             else if (
                                 (response.status >= 300 && response.status < 400) ||
@@ -120,12 +129,28 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                             this.setState({
                                 message: `${response.status} - ${response.statusText}`
                             })
+
+                            if (response.body !== null){
+                                let responseText: string = await response.text()
+
+                                try {
+                                    responseText = JSON.stringify(JSON.parse(responseText), null, 2); 
+                                } catch (e) {}
+
+                                this.setState({
+                                    responseBody: responseText
+                                })
+                            }
                         },
                         (error: Error) => this.setState({
                             buttonIcon: "StatusErrorFull",
                             statusColor: "#e81123",
-                            message: error.stack
+                            message: "error",
+                            responseBody: error.stack
                         })
+                    )
+                    .then(
+                        () => SDK.resize()
                     )
             })
     }
