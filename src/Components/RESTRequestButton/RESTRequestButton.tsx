@@ -4,7 +4,6 @@ import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions } fro
 
 import "./RestRequestButton.scss"
 
-import { Card } from "azure-devops-ui/Card"
 import { Button } from "azure-devops-ui/Button"
 
 import { showRootComponent } from "../../Common"
@@ -59,9 +58,9 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                     onClick={() => this.clickEvent()}
                     className="button"
                 />
-                <Card className="flex-grow resultbox">
+                <pre className="resultbox depth-4">
                     {this.state.responseBody}
-                </Card>
+                </pre>
             </div>
         )
     }

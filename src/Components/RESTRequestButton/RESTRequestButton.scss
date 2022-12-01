@@ -9,7 +9,8 @@
 
 .resultbox {
     width: 100%;
-    font-family: $fontFamilyMonospace
+    max-width: 100%;
+    font-family: $fontFamilyMonospace;
 }
 
 .buttonContainer {
