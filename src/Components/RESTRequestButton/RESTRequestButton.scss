@@ -3,6 +3,7 @@
 .button {
     width: fit-content;
 }
+
 .bolt-tooltip {
     pointer-events: none;
 }
@@ -11,11 +12,14 @@
     width: 100%;
     max-width: 100%;
     font-family: $fontFamilyMonospace;
+    background: rgba(244, 244, 244);
+    overflow: hidden;
+    overflow-x: auto;
 }
 
 .buttonContainer {
     display:flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 4px;
     padding-bottom: 10px;
 }

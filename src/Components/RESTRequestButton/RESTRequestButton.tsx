@@ -58,7 +58,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                     onClick={() => this.clickEvent()}
                     className="button"
                 />
-                <pre className="resultbox depth-4">
+                <pre className="resultbox depth-4 padding-4 font-size-xs custom-scrollbar">
                     {this.state.responseBody}
                 </pre>
             </div>
