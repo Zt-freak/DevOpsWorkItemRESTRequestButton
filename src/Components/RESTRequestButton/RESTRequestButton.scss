@@ -1,6 +1,7 @@
 @import "node_modules/azure-devops-ui/Core/_platformCommon.scss";
 
 .button {
+    width: -moz-fit-content;
     width: fit-content;
 }
 
@@ -15,6 +16,10 @@
     background: rgba(244, 244, 244);
     overflow: hidden;
     overflow-x: auto;
+}
+
+.resultbox:empty {
+    display: none;
 }
 
 .buttonContainer {

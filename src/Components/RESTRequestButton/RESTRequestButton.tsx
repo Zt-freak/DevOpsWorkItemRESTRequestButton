@@ -17,7 +17,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
             buttonIcon: "CircleRing",
             statusColor: "",
             message: "Click the button to send a HTTP request",
-            responseBody: "Response body appears here"
+            responseBody: ""
         }
     }
 
@@ -137,7 +137,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 } catch (e) {}
 
                                 this.setState({
-                                    responseBody: responseText
+                                    responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] != "false" ? responseText : ""
                                 })
                             }
                         },
@@ -145,7 +145,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                             buttonIcon: "StatusErrorFull",
                             statusColor: "#e81123",
                             message: "error",
-                            responseBody: error.stack
+                            responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] != "false" ? error.stack : ""
                         })
                     )
                     .then(

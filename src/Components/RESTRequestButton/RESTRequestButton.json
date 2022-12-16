@@ -59,6 +59,18 @@
                         }
                     },
                     {
+                        "id": "ShowResponseBody",
+                        "name": "Do you want to show the response body in the control? (boolean)",
+                        "description": "true, false",
+                        "properties": {
+                            "workItemFieldTypes": ["Boolean"]
+                        },
+                        "validation": {
+                            "dataType": "Boolean",
+                            "isRequired": true
+                        }
+                    },
+                    {
                         "id": "Method",
                         "name": "HTTP method",
                         "description": "*GET, POST, PUT, DELETE, etc.",
