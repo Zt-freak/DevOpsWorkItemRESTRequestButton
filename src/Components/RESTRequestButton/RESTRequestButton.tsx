@@ -119,12 +119,16 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                     buttonIcon: "AlertSolid",
                                     statusColor: "#ffb900",
                                 })
-                            else
+                            else {
                                 this.setState({
                                     buttonIcon: "StatusErrorFull",
                                     statusColor: "#e81123",
                                 })
 
+                                if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == "true")
+                                    alert(`${await response.text()}`)
+                            }
+                                
                             this.setState({
                                 message: `${response.status} - ${response.statusText}`
                             })
