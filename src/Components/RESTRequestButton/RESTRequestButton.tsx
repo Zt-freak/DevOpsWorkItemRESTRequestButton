@@ -141,12 +141,17 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 })
                             }
                         },
-                        (error: Error) => this.setState({
-                            buttonIcon: "StatusErrorFull",
-                            statusColor: "#e81123",
-                            message: "error",
-                            responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] != "false" ? error.stack : ""
-                        })
+                        (error: Error) => {
+                            this.setState({
+                                buttonIcon: "StatusErrorFull",
+                                statusColor: "#e81123",
+                                message: "error",
+                                responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] != "false" ? error.stack : ""
+                            })
+
+                            if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == "true")
+                                alert(`${error.name} - ${error.message}`)
+                        }
                     )
                     .then(
                         () => SDK.resize()
