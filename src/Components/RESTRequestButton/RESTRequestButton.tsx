@@ -106,6 +106,8 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                 fetch(this.buildUri(endpoint, data), await this.buildConfiguration(data))
                     .then(
                         async (response) => {
+                            let responseText: string = await response.text()
+
                             if (response.status >= 200 && response.status < 300)
                                 this.setState({
                                     buttonIcon: "SkypeCircleCheck",
@@ -126,7 +128,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 })
 
                                 if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == "true")
-                                    alert(`${await response.text()}`)
+                                    alert(`${responseText}`)
                             }
                                 
                             this.setState({
@@ -134,8 +136,6 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                             })
 
                             if (response.body !== null){
-                                let responseText: string = await response.text()
-
                                 try {
                                     responseText = JSON.stringify(JSON.parse(responseText), null, 2); 
                                 } catch (e) {}
