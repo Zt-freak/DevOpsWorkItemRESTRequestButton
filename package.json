@@ -43,7 +43,7 @@
     "style-loader": "^3.3.2",
     "tfx-cli": "^0.14.0",
     "ts-loader": "~9.4.2",
-    "typescript": "^5.0.2",
+    "typescript": "^5.0.3",
     "webpack": "^5.77.0",
     "webpack-cli": "^5.0.1"
   }
