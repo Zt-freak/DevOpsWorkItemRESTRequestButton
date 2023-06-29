@@ -205,6 +205,18 @@
                             "dataType": "String",
                             "isRequired": false
                         }
+                    },
+                    {
+                        "id": "shouldUseDefaultBearer",
+                        "name": "Do you want to use the default Bearer token if Authorization is empty? (boolean, default: true)",
+                        "description": "true, false (default: true)",
+                        "properties": {
+                            "workItemFieldTypes": ["Boolean"]
+                        },
+                        "validation": {
+                            "dataType": "Boolean",
+                            "isRequired": false
+                        }
                     }
                 ]
             }
