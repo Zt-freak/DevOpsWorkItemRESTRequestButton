@@ -93,7 +93,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
 
                 // set user data
 
-                if (SDK.getConfiguration().witInputs["SendUser"].toLowerCase() != "false" && SDK.getConfiguration().witInputs["SendUser"].toLowerCase() != false) {
+                if (SDK.getConfiguration().witInputs["SendUser"].toLowerCase() != "false") {
                     data["User.Id"] = SDK.getUser().id
                     data["User.Name"] = SDK.getUser().name
                     data["User.DisplayName"] = SDK.getUser().displayName
