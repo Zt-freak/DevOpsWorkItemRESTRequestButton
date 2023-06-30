@@ -207,7 +207,7 @@
                         }
                     },
                     {
-                        "id": "shouldUseDefaultBearer",
+                        "id": "ShouldUseDefaultBearer",
                         "name": "Do you want to use the default Bearer token if Authorization is empty? (boolean, default: true)",
                         "description": "true, false (default: true)",
                         "properties": {
