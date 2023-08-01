@@ -93,7 +93,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
 
                 // set user data
 
-                if (SDK.getConfiguration().witInputs["SendUser"] == undefined || SDK.getConfiguration().witInputs["SendUser"] === false || SDK.getConfiguration().witInputs["SendUser"].toLowerCase() != "false") {
+                if (SDK.getConfiguration().witInputs["SendUser"] == undefined || SDK.getConfiguration().witInputs["SendUser"] === false) {
                     data["User.Id"] = SDK.getUser().id
                     data["User.Name"] = SDK.getUser().name
                     data["User.DisplayName"] = SDK.getUser().displayName
@@ -127,7 +127,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                     statusColor: "#e81123",
                                 })
 
-                                if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == undefined || SDK.getConfiguration().witInputs["ShowErrorAlertBox"] === true || SDK.getConfiguration().witInputs["ShowErrorAlertBox"].toLowerCase() == "true")
+                                if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == undefined || SDK.getConfiguration().witInputs["ShowErrorAlertBox"] === true)
                                     alert(`${responseText}`)
                             }
                                 
@@ -141,7 +141,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 } catch (e) {}
 
                                 this.setState({
-                                    responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] == undefined || SDK.getConfiguration().witInputs["ShowResponseBody"] === false || SDK.getConfiguration().witInputs["ShowResponseBody"].toLowerCase() != "false" ? responseText : ""
+                                    responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] == undefined || SDK.getConfiguration().witInputs["ShowResponseBody"] === true ? responseText : ""
                                 })
                             }
                         },
@@ -150,10 +150,10 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 buttonIcon: "StatusErrorFull",
                                 statusColor: "#e81123",
                                 message: "error",
-                                responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] === false || SDK.getConfiguration().witInputs["ShowResponseBody"].toLowerCase() != "false" ? error.stack : ""
+                                responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] === true ? error.stack : ""
                             })
 
-                            if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == undefined || SDK.getConfiguration().witInputs["ShowErrorAlertBox"] === true || SDK.getConfiguration().witInputs["ShowErrorAlertBox"].toLowerCase() == "true")
+                            if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == undefined || SDK.getConfiguration().witInputs["ShowErrorAlertBox"] === true)
                                 alert(`${error.name} - ${error.message}`)
                         }
                     )
@@ -194,10 +194,10 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         requestConfig.headers.append("Content-Type", "application/json")
 
         const authorization: string = SDK.getConfiguration().witInputs["Authorization"]
-        const shouldUseDefaultBearer: string = SDK.getConfiguration().witInputs["ShouldUseDefaultBearer"]
+        const shouldUseDefaultBearer: boolean = SDK.getConfiguration().witInputs["ShouldUseDefaultBearer"]
         if (authorization != null && authorization != undefined)
             requestConfig.headers.append("Authorization", authorization)
-        else if (shouldUseDefaultBearer == undefined || shouldUseDefaultBearer.toLowerCase() != "false")
+        else if (shouldUseDefaultBearer == undefined || shouldUseDefaultBearer)
             requestConfig.headers.append("Authorization", `Bearer ${await SDK.getAppToken()}`)
 
         if (
