@@ -197,7 +197,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         const shouldUseDefaultBearer: string = SDK.getConfiguration().witInputs["ShouldUseDefaultBearer"]
         if (authorization != null && authorization != undefined)
             requestConfig.headers.append("Authorization", authorization)
-        else if (shouldUseDefaultBearer == undefined || shouldUseDefaultBearer)
+        else if (shouldUseDefaultBearer == undefined || shouldUseDefaultBearer.toString().toLowerCase() != "false")
             requestConfig.headers.append("Authorization", `Bearer ${await SDK.getAppToken()}`)
 
         if (
