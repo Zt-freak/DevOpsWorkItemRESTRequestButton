@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as SDK from "azure-devops-extension-sdk"
 import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions } from "azure-devops-extension-api/WorkItemTracking"
 
-import "./RestRequestButton.scss"
+import "./RESTRequestButton.scss"
 
 import { Button } from "azure-devops-ui/Button"
 
