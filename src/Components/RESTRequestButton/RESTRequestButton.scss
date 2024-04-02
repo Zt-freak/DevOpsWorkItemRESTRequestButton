@@ -13,10 +13,21 @@
     width: 100%;
     max-width: 100%;
     font-family: $fontFamilyMonospace;
-    background: $neutral-alpha-30;
+    background: rgba(121, 121, 121);
     overflow: hidden;
     overflow-x: auto;
-    color: $primary-text;
+}
+
+@media (prefers-color-scheme: dark) {
+    .resultbox {
+        color: #FFF;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .resultbox {
+        color: #000;
+    }
 }
 
 .resultbox:empty {
@@ -24,7 +35,7 @@
 }
 
 .buttonContainer {
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 4px;
     padding-bottom: 10px;
