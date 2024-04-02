@@ -13,9 +13,10 @@
     width: 100%;
     max-width: 100%;
     font-family: $fontFamilyMonospace;
-    background: rgba(244, 244, 244);
+    background: $neutral-alpha-30;
     overflow: hidden;
     overflow-x: auto;
+    color: $primary-text;
 }
 
 .resultbox:empty {
