@@ -13,21 +13,10 @@
     width: 100%;
     max-width: 100%;
     font-family: $fontFamilyMonospace;
-    background: rgba(121, 121, 121);
+    background: $neutral-alpha-30;
     overflow: hidden;
     overflow-x: auto;
-}
-
-@media (prefers-color-scheme: dark) {
-    .resultbox {
-        color: #FFF;
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    .resultbox {
-        color: #000;
-    }
+    color: $primary-text;
 }
 
 .resultbox:empty {
