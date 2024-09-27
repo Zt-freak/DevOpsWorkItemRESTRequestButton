@@ -32,15 +32,8 @@ module.exports = {
                 loader: "ts-loader"
             },
             {
-                test: /\.s[ac]ss?$/,
-                use: ["style-loader", "css-loader", "azure-devops-ui/buildScripts/css-variables-loader", {
-                    loader: "sass-loader",
-                    options: {
-                        sassOptions: {
-                            outputStyle: 'expanded'
-                        }
-                    }
-                }]
+                test: /\.scss$/,
+                use: ["style-loader", "css-loader", "sass-loader"],
             },
             {
                 test: /\.css?$/,
