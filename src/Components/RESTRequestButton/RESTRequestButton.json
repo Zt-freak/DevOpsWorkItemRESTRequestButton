@@ -71,6 +71,18 @@
                         }
                     },
                     {
+                        "id": "ShowCopyButton",
+                        "name": "Do you want to show a copy button next to the responsebody? (boolean)",
+                        "description": "true, false",
+                        "properties": {
+                            "workItemFieldTypes": ["Boolean"]
+                        },
+                        "validation": {
+                            "dataType": "Boolean",
+                            "isRequired": true
+                        }
+                    },
+                    {
                         "id": "ShowErrorAlertBox",
                         "name": "Do you want to show error data in an alert box? (boolean)",
                         "description": "true, false",
