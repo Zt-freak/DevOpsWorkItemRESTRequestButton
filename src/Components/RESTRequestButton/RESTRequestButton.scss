@@ -1,4 +1,4 @@
-@import "node_modules/azure-devops-ui/Core/_platformCommon.scss";
+@import "~azure-devops-ui/Core/_platformCommon.scss";
 
 .button {
     width: -moz-fit-content;
@@ -9,23 +9,51 @@
     pointer-events: none;
 }
 
-.resultbox {
+.resultbox-container {
+    display: flex;
+    align-items: stretch;
     width: 100%;
     max-width: 100%;
+    margin-top: 10px;
+}
+
+.resultbox {
+    flex-grow: 1;
     font-family: $fontFamilyMonospace;
     background: $neutral-alpha-30;
+    color: $primary-text;
+    padding: 8px;
+    border-radius: 4px 0 0 4px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
     overflow: hidden;
     overflow-x: auto;
-    color: $primary-text;
 }
 
 .resultbox:empty {
     display: none;
 }
 
+.copyButton {
+    background-color: $neutral-alpha-30;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+
+    &:hover {
+        background-color: $neutral-60;
+    }
+}
+
 .buttonContainer {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding-bottom: 10px;
+    gap: 10px;
+    padding-bottom: 15px;
 }

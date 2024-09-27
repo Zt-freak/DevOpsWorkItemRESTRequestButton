@@ -5,10 +5,11 @@ import { IWorkItemFormService, WorkItemTrackingServiceIds, WorkItemOptions } fro
 import "./RESTRequestButton.scss"
 
 import { Button } from "azure-devops-ui/Button"
+import { ClipboardButton } from "azure-devops-ui/Clipboard";
 
 import { showRootComponent } from "../../Common"
 
-class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: string, statusColor: string, message: string | undefined, responseBody: string | undefined}> {
+class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: string, statusColor: string, message: string | undefined, responseBody: string | undefined, showCopyButton: boolean }> {
 
     constructor(props: {}) {
         super(props)
@@ -17,19 +18,20 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
             buttonIcon: "CircleRing",
             statusColor: "",
             message: "Click the button to send a HTTP request",
-            responseBody: ""
+            responseBody: "",
+            showCopyButton: false
         }
     }
 
     public componentDidMount() {
         SDK.init()
-        .then( () => {
-            SDK.register(SDK.getContributionId(), () => {
-                return {
-                    
-                }
+            .then(() => {
+                SDK.register(SDK.getContributionId(), () => {
+                    return {
+
+                    }
+                })
             })
-        })
 
         SDK.ready().then(
             () => {
@@ -44,7 +46,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
 
     public render(): JSX.Element {
         return (
-            <div className='buttonContainer'>
+            <div className="buttonContainer">
                 <Button
                     text={this.state.buttonText}
                     tooltipProps={{
@@ -53,20 +55,34 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                     }}
                     iconProps={{
                         iconName: this.state.buttonIcon,
-                        style: {color: this.state.statusColor}
+                        style: { color: this.state.statusColor }
                     }}
                     onClick={() => this.clickEvent()}
                     className="button"
                 />
-                <pre className="resultbox depth-4 padding-4 font-size-xs custom-scrollbar">
-                    {this.state.responseBody}
-                </pre>
+                {this.state.responseBody && (
+                    <div className="resultbox-container">
+                        <div className="resultbox">
+                            {this.state.responseBody}
+                        </div>
+                        {this.state.showCopyButton && (
+                        <ClipboardButton
+                            className="copyButton"
+                            ariaLabel="Copy response to clipboard"
+                            getContent={() => this.state.responseBody || ''}
+                            tooltipProps={{
+                                text: "Copy to clipboard"
+                            }}
+                        />
+                    )}
+                    </div>
+                )}
             </div>
-        )
+        );
     }
 
     private async clickEvent() {
-        const fields : Array<string> = SDK.getConfiguration().witInputs["Fields"].split(",")
+        const fields: Array<string> = SDK.getConfiguration().witInputs["Fields"].split(",")
         const endpoint: string = SDK.getConfiguration().witInputs["Endpoint"]
 
         this.setState({
@@ -80,9 +96,9 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
             WorkItemTrackingServiceIds.WorkItemFormService
         )
 
-        const fieldValues : Promise<{[fieldName: string]: Object}> = workItemFormService.getFieldValues(fields, options)
+        const fieldValues: Promise<{ [fieldName: string]: Object }> = workItemFormService.getFieldValues(fields, options)
         fieldValues
-            .then( async data => {
+            .then(async data => {
 
                 // set Sender
 
@@ -130,18 +146,25 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                                 if (SDK.getConfiguration().witInputs["ShowErrorAlertBox"] == undefined || SDK.getConfiguration().witInputs["ShowErrorAlertBox"].toString().toLowerCase() == "true")
                                     alert(`${responseText}`)
                             }
-                                
+
                             this.setState({
                                 message: `${response.status} - ${response.statusText}`
                             })
 
-                            if (response.body !== null){
+                            if (response.body !== null) {
                                 try {
-                                    responseText = JSON.stringify(JSON.parse(responseText), null, 2); 
-                                } catch (e) {}
+                                    responseText = JSON.stringify(JSON.parse(responseText), null, 2);
+                                } catch (e) { }
 
                                 this.setState({
-                                    responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] == undefined || SDK.getConfiguration().witInputs["ShowResponseBody"].toString().toLowerCase() != "false" ? responseText : ""
+                                    responseBody: SDK.getConfiguration().witInputs["ShowResponseBody"] == undefined || SDK.getConfiguration().witInputs["ShowResponseBody"].toString().toLowerCase() != "false" ? responseText : "",
+                                    showCopyButton: (
+                                        (SDK.getConfiguration().witInputs["ShowResponseBody"] == undefined || 
+                                         SDK.getConfiguration().witInputs["ShowResponseBody"].toString().toLowerCase() != "false") 
+                                        && 
+                                        (SDK.getConfiguration().witInputs["ShowCopyButton"] == undefined || 
+                                         SDK.getConfiguration().witInputs["ShowCopyButton"].toString().toLowerCase() != "false")
+                                      ) ? true : false
                                 })
                             }
                         },
@@ -163,8 +186,8 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
             })
     }
 
-    private async buildConfiguration(body: object) : Promise<RequestInit> {
-        let requestConfig: RequestInit =  new RequestConfig();
+    private async buildConfiguration(body: object): Promise<RequestInit> {
+        let requestConfig: RequestInit = new RequestConfig();
 
         const method: string = SDK.getConfiguration().witInputs["Method"]
         if (method != null && method != undefined)
@@ -181,7 +204,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         const credentials: string = SDK.getConfiguration().witInputs["Credentials"]
         if (credentials != null && credentials != undefined)
             requestConfig.credentials = credentials as RequestCredentials
-        
+
         const redirect: string = SDK.getConfiguration().witInputs["Redirect"]
         if (redirect != null && redirect != undefined)
             requestConfig.redirect = redirect as RequestRedirect
@@ -210,11 +233,11 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
         return requestConfig
     }
 
-    private buildUri(endpoint: string, body: object) : string {
+    private buildUri(endpoint: string, body: object): string {
         let getParams: string = ""
 
         const method: string = SDK.getConfiguration().witInputs["Method"]
-        switch(method) {
+        switch (method) {
             case null:
             case undefined:
             case "GET":
@@ -226,7 +249,7 @@ class RESTRequestButton extends Component<{}, { buttonText: string, buttonIcon: 
                 break
         }
 
-        if(endpoint.includes('?'))
+        if (endpoint.includes('?'))
             return `${endpoint}&${getParams}`
         else
             return `${endpoint}?${getParams}`
